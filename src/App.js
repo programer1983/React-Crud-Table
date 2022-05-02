@@ -4,6 +4,21 @@ import './App.css';
 
 function App() {
   const [contacts, setContacts] = useState(data)
+  const [addFormData, setAddFormData] = useState({
+    fullName: "",
+    address: "",
+    phoneNumber: "",
+    email: "",
+  })
+
+  const handleFormChange = (event) => {
+    event.preventDefault()
+    const fieldName= event.target.getAttribute('name')
+    const fieldValue = event.target.value
+    const newFormData = {...addFormData}
+    newFormData[fieldName] = fieldValue
+    setAddFormData(newFormData)
+  }
 
 
   return (
@@ -35,24 +50,28 @@ function App() {
           name="fullName" 
           required="required" 
           placeholder="Enter a name..."
+          onChange={handleFormChange}
         />
         <input 
           type="text" 
           name="addres" 
           required="required" 
           placeholder="Enter an addres..."
+          onChange={handleFormChange}
         />
         <input 
           type="text" 
           name="phoneNumber" 
           required="required" 
           placeholder="Enter a phone number..."
+          onChange={handleFormChange}
         />
       <input 
           type="email" 
           name="email" 
           required="required" 
           placeholder="Enter an email..."
+          onChange={handleFormChange}
         />
         <button type="submit">Add</button>
       </form>
