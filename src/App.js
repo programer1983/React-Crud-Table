@@ -1,10 +1,13 @@
-import {useState} from "react"
+import {useState, Fragment} from "react"
 import data from './mock-data.json'
 import {nanoid} from "nanoid"
 import './App.css';
+import ReadOnlyRow from "./components/ReadOnlyRow";
+import EditableRow from "./components/EditableRow";
 
 function App() {
   const [contacts, setContacts] = useState(data)
+  const [editContactId, setEditContactId] = useState(null)
   const [addFormData, setAddFormData] = useState({
     fullName: "",
     address: "",
@@ -36,6 +39,7 @@ function App() {
 
   return (
     <div className="app-container">
+      <form>
       <table>
         <thead>
           <tr>
@@ -47,15 +51,17 @@ function App() {
         </thead>
         <tbody>
           {contacts.map((contact) => (
-            <tr>
-            <td>{contact.fullName}</td>
-            <td>{contact.address}</td>
-            <td>{contact.phoneNumber}</td>
-            <td>{contact.email}</td>
-          </tr>
+            <Fragment>
+              {editContactId === contact.id ? (
+              <EditableRow />
+              ) : (
+              <ReadOnlyRow key={contact.id} contact={contact} 
+            />)}
+            </Fragment>
           ))}
         </tbody>
       </table>
+      </form>
       <h2>Add a Contact</h2>
       <form onSubmit={handleAddFormSubmit}>
         <input 
