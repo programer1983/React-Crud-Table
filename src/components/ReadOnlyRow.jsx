@@ -1,6 +1,6 @@
 
 
-const ReadOnlyRow = ({contact, handleEditClick}) => {
+const ReadOnlyRow = ({contact, handleEditClick, nandleDeleteClick}) => {
   return (
     <tr>
     <td>{contact.fullName}</td>
@@ -12,6 +12,11 @@ const ReadOnlyRow = ({contact, handleEditClick}) => {
         type="button" 
         onClick={(event) => handleEditClick(event, contact)}>
           Edit
+      </button>
+      <button 
+        type="button" 
+        onClick={() => nandleDeleteClick(contact.id)}>
+          Delete
       </button>
     </td>
   </tr>

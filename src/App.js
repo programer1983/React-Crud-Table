@@ -81,6 +81,17 @@ function App() {
     setEditFormData(formValues)
   }
 
+  const handleCancelClick = () => {
+    setEditContactId(null)
+  }
+
+  const nandleDeleteClick = (contactId) => {
+    const newContacts = [...contacts]
+    const index = contacts.filter((contact) => contact.id == contactId)
+    newContacts.splice(index, 1)
+    setContacts(newContacts)
+  }
+
   return (
     <div className="app-container">
       <form onSubmit={handleEditFormSubmit}>
@@ -100,12 +111,14 @@ function App() {
               {editContactId === contact.id ? (
                 <EditableRow 
                   editFormData={editFormData} 
-                  handleEditFormChange={handleEditFormChange} 
+                  handleEditFormChange={handleEditFormChange}
+                  handleCancelClick={handleCancelClick}
                 />
               ) : (
                 <ReadOnlyRow 
                 contact={contact}
                 handleEditClick={handleEditClick}
+                nandleDeleteClick={nandleDeleteClick}
             />)}
             </Fragment>
           ))}
