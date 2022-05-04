@@ -17,9 +17,9 @@ const EditableRow = ({editFormData, handleEditFormChange}) => {
             <input 
                type="text" 
                required="required"  
-               name="addres"
+               name="address"
                placeholder="Enter an addres..."
-               value={editFormData.addres}
+               value={editFormData.address}
                onChange={handleEditFormChange}
             />
         </td>
