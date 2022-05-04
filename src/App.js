@@ -15,13 +15,29 @@ function App() {
     email: "",
   })
 
-  const handleFormChange = (event) => {
+  const [editFormData, setEditFormData] = useState({
+    fullName: "",
+    address: "",
+    phoneNumber: "",
+    email: "",
+  })
+
+  const handleAddFormChange = (event) => {
     event.preventDefault()
-    const fieldName= event.target.getAttribute('name')
+    const fieldName = event.target.getAttribute('name')
     const fieldValue = event.target.value
     const newFormData = {...addFormData}
     newFormData[fieldName] = fieldValue
     setAddFormData(newFormData)
+  }
+
+  const handleEditFormChange = (event) => {
+    event.preventDefault()
+    const fieldName = event.target.getAttribute('name')
+    const fieldValue = event.target.value
+    const newFormData = {...editFormData}
+    newFormData[fieldName] = fieldValue
+    setEditFormData(newFormData)
   }
 
   const handleAddFormSubmit = (event) => {
@@ -37,6 +53,18 @@ function App() {
     setContacts(newContacts)
   }
 
+  const handleEditClick = (event, contact) => {
+    event.preventDefault()
+    setEditContactId(contact.id)
+    const formValues = {
+      fullName: contact.fullName,
+      address: contact.address,
+      phoneNumber: contact.phoneNumber,
+      email: contact.email, 
+    }
+    setEditFormData(formValues)
+  }
+
   return (
     <div className="app-container">
       <form>
@@ -47,15 +75,21 @@ function App() {
             <th>Adress</th>
             <th>Phone Number</th>
             <th>Email</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
           {contacts.map((contact) => (
             <Fragment>
               {editContactId === contact.id ? (
-              <EditableRow />
+                <EditableRow 
+                  editFormData={editFormData} 
+                  handleEditFormChange={handleEditFormChange} 
+                />
               ) : (
-              <ReadOnlyRow key={contact.id} contact={contact} 
+                <ReadOnlyRow 
+                contact={contact}
+                handleEditClick={handleEditClick}
             />)}
             </Fragment>
           ))}
@@ -69,28 +103,28 @@ function App() {
           name="fullName" 
           required="required" 
           placeholder="Enter a name..."
-          onChange={handleFormChange}
+          onChange={handleAddFormChange}
         />
         <input 
           type="text" 
           name="addres" 
           required="required" 
           placeholder="Enter an addres..."
-          onChange={handleFormChange}
+          onChange={handleAddFormChange}
         />
         <input 
           type="text" 
           name="phoneNumber" 
           required="required" 
           placeholder="Enter a phone number..."
-          onChange={handleFormChange}
+          onChange={handleAddFormChange}
         />
       <input 
           type="email" 
           name="email" 
           required="required" 
           placeholder="Enter an email..."
-          onChange={handleFormChange}
+          onChange={handleAddFormChange}
         />
         <button type="submit">Add</button>
       </form>
